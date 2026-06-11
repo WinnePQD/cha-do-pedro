@@ -22,7 +22,6 @@
         
         
     header {
-        /* ✅ CAMINHO CORRIGIDO */
         background-image: linear-gradient(135deg,#e5eeb342, #ebe98433), 
                         url('fotos/Head/fundo.png');
         
@@ -112,7 +111,6 @@
             padding: 40px 20px;
             text-align: center;
             width: 100%;
-            /* ✅ CAMINHO CORRIGIDO */
             background-image: url('fotos/Head/fundo-mural.png'); 
             background-position: center;
             background-repeat: no-repeat;
@@ -235,7 +233,6 @@
 </head>
 <body>
     <header>
-        <!-- ✅ CAMINHOS CORRIGIDOS -->
         <img src="fotos/Head/folhas.png" alt="Detalhe de folha esquerda" class="imagem-header">
         <img src="fotos/Head/folhas.png" alt="Detalhe de folha direita" class="imagem-header-direita">
         
@@ -248,7 +245,6 @@
             </text>
         </svg>        
         
-        <!-- ✅ CAMINHO CORRIGIDO -->
         <img src="fotos/Head/baby.png" alt="Logo do Leãozinho" class="imagem-header-leao">
         
         <p class="subtitulo-header">Um pouco da nossa alegria registrada em fotos ✨</p>
@@ -269,7 +265,7 @@
     <script>
         const USUARIO = "WinnePQD";
         const REPOSITORIO = "cha-do-pedro";
-        const PASTA = "fotos"; 
+        const PASTA = "fotos";
         const RAMO = "main";
     
         const grade = document.getElementById("gradeFotos");
@@ -280,6 +276,12 @@
             try {
                 const resposta = await fetch(`https://api.github.com/repos/${USUARIO}/${REPOSITORIO}/contents/${PASTA}?ref=${RAMO}`);
                 const arquivos = await resposta.json();
+
+                // Se der erro ou não encontrar, mostra mensagem
+                if (!Array.isArray(arquivos)) {
+                    grade.innerHTML = `<p style="color:white; grid-column: 1 / -1;">Nenhuma foto encontrada 💛</p>`;
+                    return;
+                }
     
                 const extensoesPermitidas = ['.jpg', '.jpeg', '.png', '.gif', '.webp'];
                 let imagens = arquivos.filter(arq => {
@@ -288,32 +290,29 @@
                 });
     
                 if (imagens.length === 0) {
-                    grade.innerHTML = `<p style="color:white; grid-column: 1 / -1;">Nenhuma foto encontrada ainda 💛</p>`;
+                    grade.innerHTML = `<p style="color:white; grid-column: 1 / -1;">Nenhuma foto encontrada 💛</p>`;
                     return;
                 }
     
                 imagens.reverse();
-    
                 grade.innerHTML = "";
                 
                 imagens.forEach((foto) => {
-                    const linkImagem = `https://raw.githubusercontent.com/${USUARIO}/${REPOSITORIO}/${RAMO}/${PASTA}/${foto.name}`;
+                    // ✅ LINK SEGURO E OFICIAL DO GITHUB PAGES
+                    const linkImagem = `https://winnepqd.github.io/cha-do-pedro/fotos/${foto.name}`;
                     
                     const nomeSemExtensao = foto.name.replace(/\.[^/.]+$/, "");
-                    
                     const partes = nomeSemExtensao.split('_');
                     
                     let textoLegenda = `Foto de ${nomeSemExtensao}`; 
         
-                    if (partes.length >= 4 && partes.at(0) === "foto") {
-                        const ehMulher = (partes.at(1) === "true");
-                        const nomePuro = partes.at(2);             
-                        
+                    if (partes.length >= 4 && partes[0] === "foto") {
+                        const ehMulher = (partes[1] === "true");
+                        const nomePuro = partes[2];             
                         const artigo = ehMulher ? "da" : "do";
                         textoLegenda = `Foto ${artigo} ${nomePuro}`;
-                        
-                    } else if (partes.length === 3 && partes.at(0) === "foto") {
-                        textoLegenda = `Foto de ${partes.at(1)}`;
+                    } else if (partes.length === 3 && partes[0] === "foto") {
+                        textoLegenda = `Foto de ${partes[1]}`;
                     }
     
                     const divFoto = document.createElement("div");
@@ -335,13 +334,14 @@
         }
     
         function abrirModal(caminho) {
-            modal.style.display = "block";
+            modal.style.display = "flex";
             imgAmpliada.src = caminho;
             document.body.style.overflow = 'hidden';
         }
     
         function fecharModal() {
             modal.style.display = "none";
+            imgAmpliada.src = "";
             document.body.style.overflow = 'auto';
         }
     
