@@ -22,18 +22,25 @@
         
         
     header {
+        /* 1. Unimos o degradê e a imagem na mesma propriedade */
+        /* Importante: O degradê usa RGBA com 0.3 de opacidade (bem transparente) para você ver a imagem passar por trás */
         background-image: linear-gradient(135deg,#e5eeb342, #ebe98433), 
-                        url('fotos/Head/fundo.png');
+                        url('https://raw.githubusercontent.com/WinnePQD/cha-do-pedro/main/fotos/Head/fundo.png');
         
+        /* 2. Modo de mistura para garantir a fusão visual */
         background-blend-mode: normal;
+        
+        /* 3. Posicionamento e repetição */
         background-position: center;
         background-repeat: no-repeat;
         background-size: cover;
 
+        /* 4. Dimensões do Banner */
         min-height: 65px;       
         height: auto;            
         width: 100%;
 
+        /* 5. Alinhamento interno do conteúdo */
         display: flex;
         flex-direction: column;
         align-items: center;
@@ -111,7 +118,8 @@
             padding: 40px 20px;
             text-align: center;
             width: 100%;
-            background-image: url('fotos/Head/fundo-mural.png'); 
+            /* ✅ CAMINHO CERTO DO FUNDO */
+            background-image: url('https://raw.githubusercontent.com/WinnePQD/cha-do-pedro/main/fotos/Head/fundo-mural.png'); 
             background-position: center;
             background-repeat: no-repeat;
             background-size: cover;
@@ -161,6 +169,28 @@
             color: #555;
             font-weight: 500;
         }
+
+        /*.modal-foto {
+            display: none;
+            position: fixed;
+            z-index: 9999;
+            padding-top: 20px;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0, 0, 0, 0.205);
+        }
+
+        .conteudo-modal {
+            margin: auto;
+            display: block;
+            max-width: 90%;
+            max-height: 85vh;
+            border-radius: 4px;
+            animation: aparecer 0.3s ease;
+        }*/
 
         .modal-foto {
             display: none;
@@ -233,8 +263,9 @@
 </head>
 <body>
     <header>
-        <img src="fotos/Head/folhas.png" alt="Detalhe de folha esquerda" class="imagem-header">
-        <img src="fotos/Head/folhas.png" alt="Detalhe de folha direita" class="imagem-header-direita">
+        <!-- ✅ CAMINHO 100% CORRETO DAS FOLHAS -->
+        <img src="https://raw.githubusercontent.com/WinnePQD/cha-do-pedro/main/fotos/Head/folhas.png" alt="Detalhe de folha esquerda" class="imagem-header">
+        <img src="https://raw.githubusercontent.com/WinnePQD/cha-do-pedro/main/fotos/Head/folhas.png" alt="Detalhe de folha direita" class="imagem-header-direita">
         
         <svg viewBox="0 0 1000 250" class="texto-arqueado">
             <path id="curva-do-texto" d="M 100,190 Q 470,20 950,190" fill="transparent" />
@@ -245,7 +276,8 @@
             </text>
         </svg>        
         
-        <img src="fotos/Head/baby.png" alt="Logo do Leãozinho" class="imagem-header-leao">
+        <!-- ✅ CAMINHO 100% CORRETO DO LEÃO -->
+        <img src="https://raw.githubusercontent.com/WinnePQD/cha-do-pedro/main/fotos/Head/baby.png" alt="Logo do Leãozinho" class="imagem-header-leao">
         
         <p class="subtitulo-header">Um pouco da nossa alegria registrada em fotos ✨</p>
     </header>
@@ -265,7 +297,7 @@
     <script>
         const USUARIO = "WinnePQD";
         const REPOSITORIO = "cha-do-pedro";
-        const PASTA = "fotos";
+        const PASTA = "fotos"; // ONDE ESTÃO SUAS FOTOS
         const RAMO = "main";
     
         const grade = document.getElementById("gradeFotos");
@@ -274,45 +306,51 @@
     
         async function carregarFotos() {
             try {
-                const resposta = await fetch(`https://api.github.com/repos/${USUARIO}/${REPOSITORIO}/contents/${PASTA}?ref=${RAMO}`);
+                const resposta = await fetch(https://api.github.com/repos/${USUARIO}/${REPOSITORIO}/contents/${PASTA}?ref=${RAMO});
                 const arquivos = await resposta.json();
-
-                // Se der erro ou não encontrar, mostra mensagem
-                if (!Array.isArray(arquivos)) {
-                    grade.innerHTML = `<p style="color:white; grid-column: 1 / -1;">Nenhuma foto encontrada 💛</p>`;
-                    return;
-                }
     
                 const extensoesPermitidas = ['.jpg', '.jpeg', '.png', '.gif', '.webp'];
                 let imagens = arquivos.filter(arq => {
                     const nomeArquivo = arq.name.toLowerCase();
+                    // IGNORA A PASTA /Head/ PARA PEGAR SÓ AS FOTOS SOLTAS
                     return extensoesPermitidas.some(ext => nomeArquivo.endsWith(ext)) && !arq.name.includes('Head');
                 });
     
                 if (imagens.length === 0) {
-                    grade.innerHTML = `<p style="color:white; grid-column: 1 / -1;">Nenhuma foto encontrada 💛</p>`;
+                    grade.innerHTML = <p style="color:white; grid-column: 1 / -1;">Nenhuma foto encontrada ainda 💛</p>;
                     return;
                 }
     
+                // 🔄 MODIFICAÇÃO: Inverte a lista de fotos para colocar as mais recentes (maior timestamp) primeiro
                 imagens.reverse();
+    
                 grade.innerHTML = "";
                 
                 imagens.forEach((foto) => {
-                    // ✅ LINK SEGURO E OFICIAL DO GITHUB PAGES
-                    const linkImagem = `https://winnepqd.github.io/cha-do-pedro/fotos/${foto.name}`;
+                    const linkImagem = https://raw.githubusercontent.com/${USUARIO}/${REPOSITORIO}/${RAMO}/${PASTA}/${foto.name};
                     
+                    // 1. Remove a extensão da foto (.jpg, .png, etc)
                     const nomeSemExtensao = foto.name.replace(/\.[^/.]+$/, "");
+                    
+                    // 2. Divide o nome pelos traços (_)
+                    // Estrutura nova esperada: ["foto", "true ou false", "Nome", "Timestamp"]
                     const partes = nomeSemExtensao.split('_');
                     
-                    let textoLegenda = `Foto de ${nomeSemExtensao}`; 
+                    // Legenda padrão de segurança
+                    let textoLegenda = Foto de ${nomeSemExtensao}; 
         
-                    if (partes.length >= 4 && partes[0] === "foto") {
-                        const ehMulher = (partes[1] === "true");
-                        const nomePuro = partes[2];             
+                    // 3. ✅ NOVA LÓGICA DE GENERO: Verifica se o formato possui as 4 partes novas do App
+                    if (partes.length >= 4 && partes.at(0) === "foto") {
+                        const ehMulher = (partes.at(1) === "true"); // Transforma o texto "true" em booleano real
+                        const nomePuro = partes.at(2);              // Isola estritamente o Nome da pessoa (Ex: Winne)
+                        
+                        // Aplica "da" se for true (mulher), ou "do" se for false (homem)
                         const artigo = ehMulher ? "da" : "do";
-                        textoLegenda = `Foto ${artigo} ${nomePuro}`;
-                    } else if (partes.length === 3 && partes[0] === "foto") {
-                        textoLegenda = `Foto de ${partes[1]}`;
+                        textoLegenda = Foto ${artigo} ${nomePuro};
+                        
+                    } else if (partes.length === 3 && partes.at(0) === "foto") {
+                        // Tratamento e segurança para arquivos antigos do histórico (foto_Nome_Timestamp)
+                        textoLegenda = Foto de ${partes.at(1)};
                     }
     
                     const divFoto = document.createElement("div");
@@ -328,20 +366,19 @@
                 });
     
             } catch (erro) {
-                grade.innerHTML = `<p style="color:white; grid-column: 1 / -1;">Erro ao carregar fotos 😔</p>`;
+                grade.innerHTML = <p style="color:white; grid-column: 1 / -1;">Erro ao carregar fotos 😔</p>;
                 console.error("Erro:", erro);
             }
         }
     
         function abrirModal(caminho) {
-            modal.style.display = "flex";
+            modal.style.display = "block";
             imgAmpliada.src = caminho;
             document.body.style.overflow = 'hidden';
         }
     
         function fecharModal() {
             modal.style.display = "none";
-            imgAmpliada.src = "";
             document.body.style.overflow = 'auto';
         }
     
