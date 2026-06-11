@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chá do Pedro 🩵</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;700&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: #f4f4f4;
+            color: #222;
+            line-height: 1.2;
+        }
+        
+        
+    header {
+        /* 1. Unimos o degradê e a imagem na mesma propriedade */
+        /* Importante: O degradê usa RGBA com 0.3 de opacidade (bem transparente) para você ver a imagem passar por trás */
+        background-image: linear-gradient(135deg,#e5eeb342, #ebe98433), 
+                        url('https://raw.githubusercontent.com/WinnePQD/cha-do-pedro/main/fotos/Head/fundo.png');
+        
+        /* 2. Modo de mistura para garantir a fusão visual */
+        background-blend-mode: normal;
+        
+        /* 3. Posicionamento e repetição */
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: cover;
+
+        /* 4. Dimensões do Banner */
+        min-height: 65px;       
+        height: auto;            
+        width: 100%;
+
+        /* 5. Alinhamento interno do conteúdo */
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        padding: 10px 20px 20px 20px; 
+
+        position: relative; 
+        overflow: hidden;   
+        box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    }
+
+
+
+
+        .imagem-header {
+            max-width: 150px; 
+            height: auto;     
+            position: absolute;
+            bottom: 0;    
+            left: 0;      
+            transform: translateX(-8%) rotate(90deg); 
+            z-index: 2;
+            opacity: 0.9;
+        }
+
+        .imagem-header-direita {
+            max-width: 150px; 
+            height: auto;     
+            position: absolute;
+            top: 0;      
+            right: 0;     
+            transform: translateX(8%) rotate(-90deg); 
+            z-index: 1;
+            opacity: 0.9;
+        }
+
+        .texto-arqueado {
+            width: 80%; 
+            max-width: 600px; 
+            height: auto; 
+            display: block;
+            margin: 0 auto;   
+            margin-top: -30px; 
+            z-index: 1; 
+        }
+
+        .texto-arqueado text {
+            fill: #ffffff; 
+            font-size: 62px; 
+            font-weight: bold;      
+            text-shadow: 0 2px 3px rgba(0,0,0,0.3);
+        }
+
+        .imagem-header-leao {
+            max-width: 150px; 
+            height: auto;     
+            margin-top: -75px; 
+            z-index: 5; 
+            filter: drop-shadow(0 2px 4px rgba(0,0,0,0.2));
+        }
+
+        .subtitulo-header {
+            margin-top: 8px; 
+            margin-bottom: 0;
+            font-size: 14px; 
+            color: #0c0c0c;
+            text-align: center;
+            font-weight: 400;
+            max-width: 90%;
+            z-index: 6;
+            line-height: 1.2;
+        }
+
+        .content {
+            padding: 40px 20px;
+            text-align: center;
+            width: 100%;
+            /* ✅ CAMINHO CERTO DO FUNDO */
+            background-image: url('https://raw.githubusercontent.com/WinnePQD/cha-do-pedro/main/fotos/Head/fundo-mural.png'); 
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: cover;
+            background-color: #333333; 
+            min-height: 500px;
+        }
+
+        .content h2 {
+            color: #ffffff;
+            margin-bottom: 30px;
+            font-size: 24px;
+            text-shadow: 1px 1px 4px rgba(0,0,0,0.6);
+        }
+
+        .mural-grade {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr); 
+            gap: 25px;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .foto-item {
+            background: #ffffff;
+            padding: 12px 12px 25px 12px;
+            border-radius: 4px;
+            box-shadow: 3px 5px 15px rgba(0,0,0,0.4);
+            transition: transform 0.3s ease;
+            cursor: pointer;
+        }
+
+        .foto-item:hover {
+            transform: scale(1.03) rotate(1deg);
+        }
+
+        .foto-item img {
+            width: 100%;
+            height: 220px;
+            object-fit: cover;
+            border-radius: 2px;
+            display: block;
+        }
+
+        .foto-item p {
+            margin-top: 12px;
+            font-size: 14px;
+            color: #555;
+            font-weight: 500;
+        }
+
+        /*.modal-foto {
+            display: none;
+            position: fixed;
+            z-index: 9999;
+            padding-top: 20px;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0, 0, 0, 0.205);
+        }
+
+        .conteudo-modal {
+            margin: auto;
+            display: block;
+            max-width: 90%;
+            max-height: 85vh;
+            border-radius: 4px;
+            animation: aparecer 0.3s ease;
+        }*/
+
+        .modal-foto {
+            display: none;
+            position: fixed;
+            z-index: 9999;
+
+            left: 0;
+            top: 0;
+
+            width: 100%;
+            height: 100%;
+
+            background-color: rgba(0, 0, 0, 0.048);
+
+            justify-content: center;
+            align-items: center;
+        }
+
+
+        .conteudo-modal {
+            display: block;
+            margin: auto;
+
+            width: auto;
+            height: auto;
+
+            max-width: 98vw;
+            max-height: 98vh;
+
+            object-fit: contain;
+
+            border-radius: 4px;
+        }
+
+        .fechar-modal {
+            position: absolute;
+            top: 15px;
+            right: 35px;
+            color: #000000;
+            font-size: 40px;
+            font-weight: bold;
+            transition: 0.3s;
+            cursor: pointer;
+        }
+
+        .fechar-modal:hover { color: #bbb; }
+
+        @keyframes aparecer {
+            from {transform: scale(0.7); opacity: 0;}
+            to {transform: scale(1); opacity: 1;}
+        }
+
+        @media (max-width: 600px) {
+            header { padding: 10px 0px 2px 0px; }
+            .texto-arqueado text { font-size: 42px; }
+            .texto-arqueado { width: 90%; margin-top: -20px; }
+            .imagem-header-leao { max-width: 90px; margin-top: -35px; }
+            .subtitulo-header { font-size: 10px; margin-top: 0px; }
+            .imagem-header, .imagem-header-direita { max-width: 80px; }
+
+            .content { padding: 30px 15px; }
+            .content h2 { font-size: 20px; }
+            .mural-grade { grid-template-columns: repeat(2, 1fr); gap: 20px; }
+            .foto-item img { height: 150px; }
+
+            .conteudo-modal { max-width: 95%; }
+            .fechar-modal { font-size: 30px; top: 10px; right: 15px; }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <!-- ✅ CAMINHO 100% CORRETO DAS FOLHAS -->
+        <img src="https://raw.githubusercontent.com/WinnePQD/cha-do-pedro/main/fotos/Head/folhas.png" alt="Detalhe de folha esquerda" class="imagem-header">
+        <img src="https://raw.githubusercontent.com/WinnePQD/cha-do-pedro/main/fotos/Head/folhas.png" alt="Detalhe de folha direita" class="imagem-header-direita">
+        
+        <svg viewBox="0 0 1000 250" class="texto-arqueado">
+            <path id="curva-do-texto" d="M 100,190 Q 470,20 950,190" fill="transparent" />
+            <text font-family="'Poppins', sans-serif">
+                <textPath href="#curva-do-texto" startOffset="50%" text-anchor="middle">
+                    Chá de Bebê do Pedro 🩵
+                </textPath>
+            </text>
+        </svg>        
+        
+        <!-- ✅ CAMINHO 100% CORRETO DO LEÃO -->
+        <img src="https://raw.githubusercontent.com/WinnePQD/cha-do-pedro/main/fotos/Head/baby.png" alt="Logo do Leãozinho" class="imagem-header-leao">
+        
+        <p class="subtitulo-header">Um pouco da nossa alegria registrada em fotos ✨</p>
+    </header>
+
+    <div class="content">
+        <h2>Mural de Recordações 📸</h2>
+        <div class="mural-grade" id="gradeFotos">
+            <p style="color:white; grid-column: 1 / -1; padding:20px;">Carregando fotos... 📷</p>
+        </div>
+    </div>
+
+    <div id="modalFoto" class="modal-foto" onclick="fecharModal()">
+        <span class="fechar-modal">&times;</span>
+        <img class="conteudo-modal" id="imgAmpliada">
+    </div>
+
+    <script>
+        const USUARIO = "WinnePQD";
+        const REPOSITORIO = "cha-do-pedro";
+        const PASTA = "fotos"; // ONDE ESTÃO SUAS FOTOS
+        const RAMO = "main";
+    
+        const grade = document.getElementById("gradeFotos");
+        const modal = document.getElementById("modalFoto");
+        const imgAmpliada = document.getElementById("imgAmpliada");
+    
+        async function carregarFotos() {
+            try {
+                const resposta = await fetch(https://api.github.com/repos/${USUARIO}/${REPOSITORIO}/contents/${PASTA}?ref=${RAMO});
+                const arquivos = await resposta.json();
+    
+                const extensoesPermitidas = ['.jpg', '.jpeg', '.png', '.gif', '.webp'];
+                let imagens = arquivos.filter(arq => {
+                    const nomeArquivo = arq.name.toLowerCase();
+                    // IGNORA A PASTA /Head/ PARA PEGAR SÓ AS FOTOS SOLTAS
+                    return extensoesPermitidas.some(ext => nomeArquivo.endsWith(ext)) && !arq.name.includes('Head');
+                });
+    
+                if (imagens.length === 0) {
+                    grade.innerHTML = <p style="color:white; grid-column: 1 / -1;">Nenhuma foto encontrada ainda 💛</p>;
+                    return;
+                }
+    
+                // 🔄 MODIFICAÇÃO: Inverte a lista de fotos para colocar as mais recentes (maior timestamp) primeiro
+                imagens.reverse();
+    
+                grade.innerHTML = "";
+                
+                imagens.forEach((foto) => {
+                    const linkImagem = https://raw.githubusercontent.com/${USUARIO}/${REPOSITORIO}/${RAMO}/${PASTA}/${foto.name};
+                    
+                    // 1. Remove a extensão da foto (.jpg, .png, etc)
+                    const nomeSemExtensao = foto.name.replace(/\.[^/.]+$/, "");
+                    
+                    // 2. Divide o nome pelos traços (_)
+                    // Estrutura nova esperada: ["foto", "true ou false", "Nome", "Timestamp"]
+                    const partes = nomeSemExtensao.split('_');
+                    
+                    // Legenda padrão de segurança
+                    let textoLegenda = Foto de ${nomeSemExtensao}; 
+        
+                    // 3. ✅ NOVA LÓGICA DE GENERO: Verifica se o formato possui as 4 partes novas do App
+                    if (partes.length >= 4 && partes.at(0) === "foto") {
+                        const ehMulher = (partes.at(1) === "true"); // Transforma o texto "true" em booleano real
+                        const nomePuro = partes.at(2);              // Isola estritamente o Nome da pessoa (Ex: Winne)
+                        
+                        // Aplica "da" se for true (mulher), ou "do" se for false (homem)
+                        const artigo = ehMulher ? "da" : "do";
+                        textoLegenda = Foto ${artigo} ${nomePuro};
+                        
+                    } else if (partes.length === 3 && partes.at(0) === "foto") {
+                        // Tratamento e segurança para arquivos antigos do histórico (foto_Nome_Timestamp)
+                        textoLegenda = Foto de ${partes.at(1)};
+                    }
+    
+                    const divFoto = document.createElement("div");
+                    divFoto.className = "foto-item";
+                    divFoto.onclick = () => abrirModal(linkImagem);
+    
+                    divFoto.innerHTML = `
+                        <img src="${linkImagem}" alt="${textoLegenda}">
+                        <p>${textoLegenda}</p>
+                    `;
+    
+                    grade.appendChild(divFoto);
+                });
+    
+            } catch (erro) {
+                grade.innerHTML = <p style="color:white; grid-column: 1 / -1;">Erro ao carregar fotos 😔</p>;
+                console.error("Erro:", erro);
+            }
+        }
+    
+        function abrirModal(caminho) {
+            modal.style.display = "block";
+            imgAmpliada.src = caminho;
+            document.body.style.overflow = 'hidden';
+        }
+    
+        function fecharModal() {
+            modal.style.display = "none";
+            document.body.style.overflow = 'auto';
+        }
+    
+        document.addEventListener('keydown', e => {
+            if (e.key === "Escape") fecharModal();
+        });
+    
+        carregarFotos();
+    </script>
+
+
+</body>
+</html>
